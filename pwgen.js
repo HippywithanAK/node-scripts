@@ -31,11 +31,12 @@ function pwGen(){
     let sha25 = ""
     let pw = ""
     let pwLength
+    let totalNumChars = upperChars.length * 2 + specChars.length
     
-    
+    // use readline functon to get password length from user
     readline.question('Enter desired password length between 5 and 50 \n(default = 12): ', length => {
         if(Number(length) === 0){
-            pwLength = 12
+            pwLength = 6
         } else {
             pwLength = Math.floor(length / 2)
         }
@@ -46,8 +47,8 @@ function pwGen(){
         } else {
             // function to build pseudo-random array characters
                 function buildCharString(){
-                    for(i = 0; i < pwLength / 2; i++) {
-                        let x = Math.floor(Math.random() * 63)
+                    for(i = 0; i < pwLength; i++) {
+                        let x = Math.floor(Math.random() * totalNumChars)
                         pwChars.push(chars[x])
                     }
                     // make the pseudo-random array of characters a string with no commas
@@ -84,7 +85,7 @@ function pwGen(){
                 }
                 
                 // alternately select from charString and sha25 to build final password 
-                for(i = 0; i < pwLength / 2 ; i++) {
+                for(i = 0; i < pwLength; i++) {
                         pw += charString[i]
                         pw += sha25[i]
                     }
