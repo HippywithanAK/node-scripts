@@ -32,16 +32,19 @@ function pwGen(){
     let pw = ""
     let pwLength
     let totalNumChars = upperChars.length * 2 + specChars.length
+    let ogLength
     
     // use readline functon to get password length from user
-    readline.question('Enter desired password length between 5 and 50 \n(default = 12): ', length => {
+    readline.question('******************\nWelcome to PW-Gen \n******************\n\nPasswords must be between 5 and 50 characters \nDefault password length is 12 \n\nPlease enter the desired length of your password: ', length => {
         if(Number(length) === 0){
             pwLength = 6
+            ogLength =12
         } else {
-            pwLength = Math.floor(length / 2)
+            pwLength = Math.ceil(length / 2)
+            ogLength = length
         }
         if(Number(length) > 0 && Number(length) < 5 || Number(length) > 50 || isNaN(Number(length))) {
-            console.log('Please enter a number between 5 and 50: ')
+            console.log('Please enter a number between 6 and 50: ')
             readline.close()
             pwGen()
         } else {
@@ -89,11 +92,16 @@ function pwGen(){
                         pw += charString[i]
                         pw += sha25[i]
                     }
-        
+                
+                // check if pw is to long
+                if(ogLength % 2 !== 0) {
+                    pw = pw.slice(0, -1)
+                }
+                
                 readline.close()
         
                 // print final password 
-                console.log("password: " + pw)
+                console.log("******************\nHere is your randomly generated password: \n" + pw +"\n******************")
             }
         })
 }
